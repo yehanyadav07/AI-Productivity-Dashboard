@@ -1,0 +1,135 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* MAIN CONTAINER */
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 20px;
+}
+
+/* THEMES */
+.dashboard.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dashboard.light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.navbar h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.navbar button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+/* TASK BOX */
+.task-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 25px;
+  border-radius: 12px;
+  background: #1e293b;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.dashboard.light .task-container {
+  background: white;
+}
+
+/* HEADING */
+.task-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* INPUT SECTION */
+.task-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.task-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.task-input button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
+
+/* STATS */
+.stats {
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* LIST */
+ul {
+  list-style: none;
+}
+
+li {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  background: #334155;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dashboard.light li {
+  background: #e2e8f0;
+}
+
+li:hover {
+  transform: scale(1.02);
+}
+
+/* COMPLETED TASK */
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
