@@ -86,8 +86,11 @@ function TaskList({ tasks, setTasks }) {
 
       <p className="ai-tip">
         💡 Tip: Complete your hardest task first for better focus.
+        <br></br>
+      
+       Click on a task to mark it as completed ✅
       </p>
-
+      
       <ul>
         {tasks.map((task, i) => (
           <li key={i} className={task.completed ? "completed" : ""}>

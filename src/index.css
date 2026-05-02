@@ -245,3 +245,6 @@ li:hover {
   width: 100%;
   max-width: none;  /* ADD THIS */
 }
+.ai-tip {
+  text-align: center;
+}
