@@ -70,18 +70,22 @@ const editTask = (index) => {
      Click on the task to remove/Mark completed 
 </p>
 
+
       <ul>
         {tasks.map((task, i) => (
 <li key={i} className={task.completed ? "completed" : ""}>
   
-  {/* CLICK ONLY THIS TO TOGGLE */}
-  <span onClick={() => toggleTask(i)}>
+  <span
+    className="task-text"
+    onClick={() => toggleTask(i)}
+  >
     {task.text}
   </span>
 
-  {/* BUTTONS */}
-  <button onClick={() => editTask(i)}>✏️</button>
-  <button onClick={() => deleteTask(i)}>❌</button>
+  <div className="task-actions">
+    <button onClick={() => editTask(i)}>✏️</button>
+    <button onClick={() => deleteTask(i)}>❌</button>
+  </div>
 
 </li>
           
