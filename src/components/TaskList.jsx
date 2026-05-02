@@ -1,52 +1,67 @@
 import { useState, useEffect } from "react";
 
-function TaskList() {
-  const deleteTask = (index) => {
-  const updated = tasks.filter((_, i) => i !== index);
-  setTasks(updated);
-};
-
-  const [tasks, setTasks] = useState(() => {
-    // 🔥 load from localStorage correctly
-    const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : [];
-  });
-
+function TaskList({ tasks, setTasks }) {
   const [input, setInput] = useState("");
 
-  // 🔥 save whenever tasks change
+  // 🔥 Load from localStorage (only if tasks empty)
+  useEffect(() => {
+    const saved = localStorage.getItem("tasks");
+    if (saved && tasks.length === 0) {
+      setTasks(JSON.parse(saved));
+    }
+  }, []);
+
+  // 🔥 Save to localStorage
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // ➕ Add Task
   const addTask = () => {
     if (!input.trim()) return;
 
-    setTasks([...tasks, { text: input, completed: false }]);
+    const today = new Date().toLocaleDateString();
+
+    setTasks([
+      ...tasks,
+      { text: input, completed: false, date: today }
+    ]);
+
     setInput("");
   };
 
+  // ✅ Toggle Complete
   const toggleTask = (index) => {
     const updated = [...tasks];
     updated[index].completed = !updated[index].completed;
     setTasks(updated);
   };
-const editTask = (index) => {
-  const newText = prompt("Edit task:", tasks[index].text);
 
-  // ❗ important checks
-  if (newText === null) return;        // user pressed cancel
-  if (!newText.trim()) return;        // empty input
+  // ✏️ Edit Task
+  const editTask = (index) => {
+    const newText = prompt("Edit task:", tasks[index].text);
 
-  const updated = [...tasks];
-  updated[index].text = newText;
+    if (newText === null) return;
+    if (!newText.trim()) return;
 
-  setTasks(updated);
-};
+    const updated = [...tasks];
+    updated[index].text = newText;
+    setTasks(updated);
+  };
 
+  // ❌ Delete Task
+  const deleteTask = (index) => {
+    const updated = tasks.filter((_, i) => i !== index);
+    setTasks(updated);
+  };
 
+  // 📊 Stats
   const completedCount = tasks.filter(t => t.completed).length;
 
+  const today = new Date().toLocaleDateString();
+  const todayCompleted = tasks.filter(
+    t => t.completed && t.date === today
+  ).length;
 
   return (
     <div className="task-container">
@@ -60,35 +75,36 @@ const editTask = (index) => {
         />
         <button onClick={addTask}>Add</button>
       </div>
-     
 
       <p className="stats">
         {completedCount} of {tasks.length} completed
       </p>
-      <p className="ai-tip">
-  💡 Tip: Complete your hardest task first for better focus.<br></br>
-     Click on the task to remove/Mark completed 
-</p>
 
+      <p className="stats">
+        Today Completed: {todayCompleted}
+      </p>
+
+      <p className="ai-tip">
+        💡 Tip: Complete your hardest task first for better focus.
+      </p>
 
       <ul>
         {tasks.map((task, i) => (
-<li key={i} className={task.completed ? "completed" : ""}>
-  
-  <span
-    className="task-text"
-    onClick={() => toggleTask(i)}
-  >
-    {task.text}
-  </span>
+          <li key={i} className={task.completed ? "completed" : ""}>
 
-  <div className="task-actions">
-    <button onClick={() => editTask(i)}>✏️</button>
-    <button onClick={() => deleteTask(i)}>❌</button>
-  </div>
+            <span
+              className="task-text"
+              onClick={() => toggleTask(i)}
+            >
+              {task.text}
+            </span>
 
-</li>
-          
+            <div className="task-actions">
+              <button onClick={() => editTask(i)}>✏️</button>
+              <button onClick={() => deleteTask(i)}>❌</button>
+            </div>
+
+          </li>
         ))}
       </ul>
     </div>
